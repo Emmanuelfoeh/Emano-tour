@@ -1,6 +1,8 @@
 import { CssBaseline, Grid } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useMap } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import L from "leaflet";
 import { getPlacesData } from "./API";
 import Header from "./component/Header/Header";
 import List from "./component/List/List";
@@ -26,12 +28,37 @@ function App() {
       }
     );
   }, []);
-
+  // rating useeffect
   useEffect(() => {
     const filterplaces = places.filter((place) => place.rating > rating);
     setFilterplaces(filterplaces);
   }, [rating]);
 
+  // search input function
+  function LeafletgeoSearch() {
+    const map = useMap();
+    useEffect(() => {
+      const provider = new OpenStreetMapProvider();
+
+      const searchControl = new GeoSearchControl({
+        provider,
+        showMarker: true,
+        marker: {
+          // optional: L.Marker    - default L.Icon.Default
+          // icon: new L.Icon.Default(),
+          draggable: false,
+        },
+      });
+
+      map.addControl(searchControl);
+
+      return () => map.removeControl(searchControl);
+    }, [type, bounds]);
+
+    return null;
+  }
+
+  // fetching data useeffect
   useEffect(() => {
     console.log(coordinates, bounds);
     setisLoading(true);
@@ -41,10 +68,7 @@ function App() {
       setFilterplaces([]);
       setisLoading(false);
     });
-    // return () => {
-    //   cleanup
-    // }
-  }, [type, coordinates, bounds]);
+  }, [type, bounds]);
 
   return (
     <>
@@ -66,6 +90,7 @@ function App() {
             coordinates={coordinates}
             setBounds={setBounds}
             setCoordinates={setCoordinates}
+            LeafletgeoSearch={LeafletgeoSearch}
             places={filterplaces.length ? filterplaces : places}
           />
         </Grid>

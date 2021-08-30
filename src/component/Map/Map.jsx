@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import googleMapReact from 'google-map-react'
 // import GoogleMapReact from 'google-map-react';
 import {
@@ -14,7 +14,13 @@ import Rating from "@material-ui/lab/Rating";
 
 import useStyles from "./style";
 
-const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
+const Map = ({
+  coordinates,
+  setCoordinates,
+  setBounds,
+  places,
+  LeafletgeoSearch,
+}) => {
   const classes = useStyles();
   const isMoble = useMediaQuery("(min-width:600px)");
   // Location function
@@ -58,16 +64,16 @@ const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* {places?.map((place, i) => {
-          const lat = Number(place.latitude);
-          const lng = Number(place.longitude);
+          const loca = [Number(place.latitude), Number(place.longitude)];
           return (
-            <Marker position={{ lat:lat, lng:lng }} key={i}>
+            <Marker key={i} position={loca}>n
               <Popup>You are here</Popup>
             </Marker>
           );
         })} */}
 
         <LocationMarker />
+        <LeafletgeoSearch />
       </MapContainer>
       {/* <GoogleMapReact bootstrapURLKeys={{key:'AIzaSyAPwwjQyi3mxNlYC1mca_l4vH5Nlj9sZIw'}} center={coodinates} defaultCenter={coodinates} defaultZoom={14} >
               
