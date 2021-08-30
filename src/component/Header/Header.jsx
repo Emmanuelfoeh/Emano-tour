@@ -15,7 +15,7 @@ const Header = () => {
         </Typography>
         <Box display="flex">
           <Typography variant="h6" className={classes.title}>
-            Tap on the Map to visit your current location.
+            Tap on the Map to visit your current location on load.
           </Typography>
           {/* <Autocomplete> */}
           {/* <div className={classes.search}>
