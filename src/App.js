@@ -53,7 +53,7 @@ function App() {
       map.addControl(searchControl);
 
       return () => map.removeControl(searchControl);
-    }, [type, bounds]);
+    }, [map]);
 
     return null;
   }
@@ -68,7 +68,7 @@ function App() {
       setFilterplaces([]);
       setisLoading(false);
     });
-  }, [type, bounds]);
+  }, [type, coordinates, bounds]);
 
   return (
     <>
